@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Periodistas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+
+    <table class="table table-dark" method="get">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nombre de Usuario</th>
+                <th scope="col">Fecha de Alta</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Activo</th>
+                <th scope="col">Sueldo Mensual</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody th:each="periodista : ${periodistas}"> 
+            <tr>
+                <th scope="row" th:text="${periodista.id}"></th>
+                <td th:text="${periodista.nombreperiodista}"></td>
+                <td th:text="${periodista.fechaAlta}"></td>
+                <td th:text="${periodista.rol}"></td>
+                <td th:text="${periodista.activo}"></td>
+                <td th:text="${periodista.sueldoMensual}"></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="accionesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Acciones
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="accionesDropdown">
+                            <li>
+                                <a class="dropdown-item" th:href="@{'/periodista/modificar/' + ${periodista.id}}">
+                                    <i class="fas fa-edit"></i> Modificar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{'/periodista/eliminar/' + ${periodista.id}}" th:attr="onclick='return confirmarEliminar()'">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="container">
+        <!-- Botón para volver a /home -->
+        <a href="/" class="btn btn-primary">Volver a Home</a>
+
+        <!-- Botón para volver a /usuario/registrar -->
+        <a href="/periodista/registrar" class="btn btn-secondary">Volver a Registrar Autor</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script th:inline="javascript">
+        function confirmarEliminar() {
+            /*<![CDATA[*/
+            console.log('se esta ejecutando la funcion');
+            return confirm('¿Estás seguro de que deseas eliminar este autor?');
+            /*]]>*/
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!<!-- esto es importante para que el html reconozca las etiquetas de th -->
+    <head>
+        <meta charset="UTF-8">
+        <title>Cargar Noticias</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Cargar Noticias</h2>
+
+            <!-- Formulario de carga de noticias -->
+            <form class="formulario" th:action="@{/noticia/registro}" method="post">
+
+                <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+                    <div class="card-body">
+                        <h5 class="card-title">Error </h5> <!<!-- ð -->
+                        <p class="card-text" th:text="${error}"></p>
+                    </div>
+                </div>
+                <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                    <div class="card-body">
+                        <h5 class="card-title">Exito!</h5>
+                        <p class="card-text" th:text="${exito}"></p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Ingrese aquí el título:</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo"> <!-- con required puedo impedir que se deje en blanco un campo -->
+                </div>
+                <div class="mb-3">
+                    <label for="cuerpo" class="form-label">Ingrese aquí el cuerpo:</label>
+                    <textarea class="form-control" id="cuerpo" name="cuerpo" rows="4"></textarea><!-- con required puedo impedir que se deje en blanco un campo -->
+                </div>
+                <div class="mb-3">
+                    <label for="autor" class="form-label">Seleccione el autor:</label>
+                    <select class="form-control" id="autor" name="autor">
+                        <!-- Iterar sobre la lista de autores desde el controlador y generar las opciones -->
+                        <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombreUsuario}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+
+        <div class="container">
+            <!-- Botón para volver a /home -->
+            <a href="/" class="btn btn-primary">Volver a Home</a>
+
+            <!-- Botón para volver a /noticia/registrar -->
+            <a href="/noticia/lista" class="btn btn-secondary">Volver a Lista Noticias</a>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    </body>
+</html>
