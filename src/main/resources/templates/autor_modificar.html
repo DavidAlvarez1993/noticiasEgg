@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Cargar Periodista</title>
+        <title>Actualizar Periodista</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     </head>
     <body>
         <div class="container mt-5">
-            <h2 class="text-center mb-4">Cargar Periodista</h2>
+            <h2 class="text-center mb-4">Actualizar Periodista</h2>
 
             <!-- Formulario de carga de usuarios -->
-            <form class="formulario" th:action="@{/periodista/modificar}" method="post">
+            <form class="formulario" th:action="@{/periodista/modificar__${periodista.id}__}" method="post">
 
                 <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
                     <div class="card-body">
@@ -50,6 +50,10 @@
                         <option value="false">No</option>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label for="sueldoMensual" class="form-label">Sueldo Mensual:</label>
+                    <input type="number" class="form-control" id="sueldoMensual" name="sueldoMensual">
+                </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
         </div>
@@ -59,7 +63,7 @@
             <a href="/" class="btn btn-primary">Volver a Home</a>
 
             <!-- Botón para volver a /usuario/lista -->
-            <a href="/autores/lista" class="btn btn-secondary">Volver a Lista Periodistas</a>
+            <a href="/periodista/lista" class="btn btn-secondary">Volver a Lista Periodistas</a>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

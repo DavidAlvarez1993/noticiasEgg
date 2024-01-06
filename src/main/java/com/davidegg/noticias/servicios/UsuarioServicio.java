@@ -22,7 +22,6 @@ public class UsuarioServicio {
     @Autowired
     protected NoticiaRepositorio noticiaRepo;
     @Autowired
-    //@Qualifier("usuarioRepositorio")
     protected UsuarioRepositorio usuarioRepo;
     @Autowired
     protected PeriodistaRepositorio periodistaRepo;
@@ -44,27 +43,6 @@ public class UsuarioServicio {
         usuario.setActivo(activo);
         usuarioRepo.save(usuario);
 
-//        switch (rol) {
-//
-//            case USER:
-//
-//                
-//
-//                
-//                break;
-//
-//            case PERIODISTA:
-//                
-//                Periodista periodista = (Periodista) usuario;
-//                periodista.set
-//                periodistaRepo.save(periodista);
-//
-//                break;
-//            case ADMIN:
-//
-//                break;
-//            default:
-//        }
     }
 
     public void eliminarUsuario(String id) throws MiException {
@@ -80,5 +58,59 @@ public class UsuarioServicio {
             throw new MiException("No se encontró la usuario con ID: " + id);
         }
     }
+
+    @Transactional
+    public void modificarUsuario(String id, String nombreUsuario, String password, Boolean activo) throws MiException {
+
+        if (id == null) {
+            throw new MiException("El id no puede ser nulo");
+        }
+
+//Aqui las validaciones de los atributos comunes a todos los metodos
+        validar(nombreUsuario, password);
+
+        Optional<Usuario> respuesta = usuarioRepo.findById(id); //Puede o no contener un valor no nulo, 
+
+        if (respuesta.isPresent()) {                              //respuesta.isPresent() da true si  respuestacontiene un valor no nulo     
+
+            Usuario usuario = respuesta.get();
+
+            usuario.setNombreUsuario(nombreUsuario);
+            usuario.setPassword(password);
+            usuario.setActivo(activo);
+
+            usuarioRepo.save(usuario);
+        }
+
+    }
+
+    public List<Usuario> listaUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+
+        usuarios = usuarioRepo.findAll();
+        return usuarios;
+    }
+
+    private void validar(String nombreUsuario, String password) throws MiException {
+        if (nombreUsuario == null || nombreUsuario.isEmpty()) {
+            throw new MiException("El nombre del usuario no puede ser nulo ni estar vacío");
+        }
+
+        if (password == null || password.isEmpty() || password.length() <= 5) {
+            throw new MiException("La contraseña no puede ser nulo ni estar vacío ni tener menos de 6 caracteres");
+        }
+    }
+
+    @Transactional
+    public Usuario getOne(String id) throws MiException {
+
+        if (id == null) {
+            throw new MiException("El id no puede ser nulo");
+        } else {
+            return usuarioRepo.getOne(id);
+        }
+
+    }
+
 
 }

@@ -44,6 +44,8 @@ public class NoticiaControlador {
 
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo) {
+        List<Periodista> autores = periodistaServicio.listaPeriodistas();
+        modelo.addAttribute("autores", autores);
 
         try {
             modelo.put("noticia", noticiaServicio.getOne(id));

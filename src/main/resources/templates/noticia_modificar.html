@@ -35,10 +35,12 @@
                     <label for="cuerpo" class="form-label">Ingrese aquí el cuerpo: (Anterior: <!-- <span th:text="${noticia.cuerpo}"></span> --> )</label>
                     <textarea class="form-control" id="cuerpo" name="cuerpo" rows="4" required></textarea><!-- con required puedo impedir que se deje en blanco un campo -->
                 </div>
-                <!-- luego no se ingresará asi el autor, vendra del atributo nombre de la entidad Periodista-->
                 <div class="mb-3">
-                    <label for="autor" class="form-label">Ingrese aquí el autor: (Anterior: )</label>
-                    <textarea class="form-control" id="autor" name="autor" rows="4"></textarea><!-- con required puedo impedir que se deje en blanco un campo -->
+                    <label for="autor" class="form-label">Seleccione el autor: (Anterior: )</label>
+                    <select class="form-control" id="autor" name="autor">
+                        <!-- Iterar sobre la lista de autores desde el controlador y generar las opciones -->
+                        <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombreUsuario}"></option>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>

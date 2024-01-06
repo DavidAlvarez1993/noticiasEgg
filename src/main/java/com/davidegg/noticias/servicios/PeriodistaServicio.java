@@ -8,16 +8,11 @@ import com.davidegg.noticias.entidades.Noticia;
 import com.davidegg.noticias.entidades.Periodista;
 import com.davidegg.noticias.enumeracion.Rol;
 import com.davidegg.noticias.excepciones.MiException;
-import com.davidegg.noticias.repositorios.AdministradorRepositorio;
-import com.davidegg.noticias.repositorios.NoticiaRepositorio;
-import com.davidegg.noticias.repositorios.PeriodistaRepositorio;
-import com.davidegg.noticias.repositorios.UsuarioRepositorio;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -77,7 +72,7 @@ public class PeriodistaServicio extends UsuarioServicio {
             //estar atento a que pasa si no ingreso nada como sueldoMensual
             periodista.setSueldoMensual(sueldoMensual);
 
-            usuarioRepo.save(periodista);
+            //usuarioRepo.save(periodista);
 
             periodistaRepo.save(periodista);
         }
@@ -103,6 +98,17 @@ public class PeriodistaServicio extends UsuarioServicio {
 
         periodistas = periodistaRepo.findAll();
         return periodistas;
+    }
+    
+    @Transactional
+    public Periodista getOne(String id) throws MiException {
+
+        if (id == null) {
+            throw new MiException("El id no puede ser nulo");
+        } else {
+            return periodistaRepo.getOne(id);
+        }
+
     }
 
     public void TODO() {
